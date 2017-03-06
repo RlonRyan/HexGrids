@@ -30,11 +30,18 @@ public class HexCell {
 	// ========================================
 	// Constructors
 	// ========================================
+	public HexCell(HexPoint p, float size, HexOrientation orientation) {
+		this.x = p.getX();
+		this.y = p.getY();
+		this.z = p.getZ();
+		this.size = size;
+		this.orientation = orientation;
+	}
 	
-	public HexCell(int x, int y, float size, HexOrientation orientation) {
-		this.x = x;
-		this.y = -x - y;
-		this.z = y;
+	public HexCell(int q, int r, float size, HexOrientation orientation) {
+		this.x = q;
+		this.y = -q - r;
+		this.z = r;
 		this.size = size;
 		this.orientation = orientation;
 	}

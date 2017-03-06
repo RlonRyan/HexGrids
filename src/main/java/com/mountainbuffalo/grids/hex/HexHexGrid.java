@@ -2,6 +2,10 @@
  */
 package com.mountainbuffalo.grids.hex;
 
+import java.util.Arrays;
+import java.util.SplittableRandom;
+import java.util.stream.Stream;
+
 /**
  *
  * @author Ryan
@@ -9,12 +13,14 @@ package com.mountainbuffalo.grids.hex;
 public class HexHexGrid {
 
 	private final int radius;
+	private final int diameter;
 	private final float cellSize;
 	private final HexCell[] cells;
 	private final HexOrientation orientation;
 
 	public HexHexGrid(int radius, float cellSize, HexOrientation orientation) {
 		this.radius = radius;
+		this.diameter = 2 * radius;
 		this.cellSize = cellSize;
 		this.cells = new HexCell[calculateSize(radius)];
 		this.orientation = orientation;
@@ -72,23 +78,33 @@ public class HexHexGrid {
 		return cellSize;
 	}
 	
-	public boolean has(int q, int r) {
-		return cells[elementSum(radius, r, q) - 1] == null;
+	public boolean isValid(HexPoint p) {
+		return cells.length >= elementSum(radius, p.getR(), p.getQ()) - 1;
 	}
 	
-	public HexCell get(int q, int r) {
-		return cells[elementSum(radius, r, q) - 1];
+	public boolean has(HexPoint p) {
+		return cells[elementSum(radius, p.getR(), p.getQ()) - 1] == null;
+	}
+	
+	public HexCell get(HexPoint p) {
+		return cells[elementSum(radius, p.getR(), p.getQ()) - 1];
 	}
 	
 	public HexCell put(HexCell cell) {
 		final int index = elementSum(radius, cell.getR(), cell.getQ());
 		final HexCell result = cells[index];
 		cells[index] = cell;
-		return cell;
+		return result;
 	}
-
-	public HexCell[] getCells() {
-		return cells;
+	
+	public Stream<HexCell> streamCells() {
+		return Arrays.stream(cells);
+	}
+	
+	public void randomize(SplittableRandom rand, HexPoint p) {
+		p.setX(rand.nextInt(diameter) - radius);
+		p.setY(rand.nextInt(diameter) - radius);
+		p.setZ(rand.nextInt(diameter) - radius);
 	}
 
 }

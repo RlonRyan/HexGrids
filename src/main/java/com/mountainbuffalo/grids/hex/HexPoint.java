@@ -29,6 +29,14 @@ public class HexPoint {
 	public int getZ() {
 		return z;
 	}
+	
+	public int getQ() {
+		return x;
+	}
+	
+	public int getR() {
+		return z;
+	}
 
 	public void setX(int x) {
 		this.x = x;
@@ -40,6 +48,12 @@ public class HexPoint {
 
 	public void setZ(int z) {
 		this.z = z;
+	}
+	
+	public void set(int q, int r) {
+		this.x = q;
+		this.y = -q-r;
+		this.z = r;
 	}
 	
 	public void set(int x, int y, int z) {
