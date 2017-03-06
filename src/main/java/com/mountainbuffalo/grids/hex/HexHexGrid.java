@@ -87,4 +87,8 @@ public class HexHexGrid {
 		return cell;
 	}
 
+	public HexCell[] getCells() {
+		return cells;
+	}
+
 }
